@@ -1,0 +1,377 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register - KIET Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'css/Home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- ================= HEADER ================= -->
+    <header>
+        <div class="header-top">
+            <div class="container">
+
+                <div class="college-info">
+                    <div class="logo-img">
+                        <img src="https://tse3.mm.bing.net/th/id/OIP.jdSqfoHHlYVjNIr1PiJOfgHaC1?pid=Api&P=0&h=180"
+                            alt="KIET Logo" class="logo">
+                    </div>
+
+                    <div class="college-text">
+                        <h1>Kakinada Institute of Engineering and Technology</h1>
+                        <p>Approved by AICTE, Affiliated to JNTUK, Accredited by NAAC</p>
+                    </div>
+                </div>
+
+                <div class="user-actions">
+                    <a href="{% url 'login' %}" class="btn-login">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="{% url 'register' %}" class="btn-register active">
+                        <i class="fas fa-user-plus"></i> Register
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+    <div class="auth-container">
+        <!-- REGISTRATION CARD -->
+        <div class="auth-card" style="width: 500px;">
+            <div class="auth-header">
+                <h2>Join KIET Library</h2>
+                <p>Create your account in just two steps</p>
+            </div>
+
+            <form class="auth-form" method="POST" action="{% url 'register' %}">
+                {% csrf_token %}
+
+                <!-- STEP 1 -->
+                <div id="step1">
+                    <h3 style="margin-bottom: 20px; font-size: 18px; color: #ffffff;">Step 1: Identity Verification</h3>
+
+                    <div id="emailMessage" class="alert-message"></div>
+
+                    <div class="form-group">
+                        <label>Roll Number / Employee ID</label>
+                        <div class="input-group">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="roll_number" name="roll_number" placeholder="Enter your ID" required
+                                onblur="fetchUserDetails()">
+                        </div>
+                        <small id="rollNoFeedback"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>KIET Email Address</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" name="email" placeholder="email@kiet.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email OTP</label>
+                        <div class="otp-group">
+                            <div class="input-group" style="flex: 1;">
+                                <i class="fas fa-key"></i>
+                                <input type="text" id="email_otp" placeholder="Verification Code">
+                            </div>
+                            <button type="button" class="btn-otp" onclick="sendEmailOTP()">Send</button>
+                            <button type="button" class="btn-otp" onclick="validateEmailOTP()">Verify</button>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" name="password" placeholder="Create Password"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm</label>
+                            <div class="input-group">
+                                <i class="fas fa-shield-alt"></i>
+                                <input type="password" id="confirm_password" placeholder="Repeat" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="goToStep2()" style="margin-top: 10px;">
+                        Next Step <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- STEP 2 -->
+                <div id="step2" style="display:none;">
+                    <h3 style="margin-bottom: 20px; font-size: 18px; color: #1e3c72;">Step 2: Personal Details</h3>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <div class="input-group">
+                                <i class="fas fa-user-circle"></i>
+                                <input type="text" id="first_name" name="first_name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <div class="input-group">
+                                <i class="fas fa-user-circle"></i>
+                                <input type="text" id="last_name" name="last_name" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Mobile</label>
+                            <div class="input-group">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="mobile" name="mobile" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>DOB</label>
+                            <div class="input-group">
+                                <i class="fas fa-calendar-alt"></i>
+                                <input type="date" id="dob" name="dob">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <div class="input-group">
+                                <i class="fas fa-venus-mars"></i>
+                                <select id="gender" name="gender">
+                                    <option value="">Select</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>User Type</label>
+                            <div class="input-group">
+                                <i class="fas fa-user-tag"></i>
+                                <select id="user_type" name="user_type" required>
+                                    <option value="">Select</option>
+                                    <option value="student">Student</option>
+                                    <option value="faculty">Faculty</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Course</label>
+                            <div class="input-group">
+                                <i class="fas fa-graduation-cap"></i>
+                                <input type="text" id="course" name="course">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Branch</label>
+                            <div class="input-group">
+                                <i class="fas fa-code-branch"></i>
+                                <input type="text" id="branch" name="branch">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Year</label>
+                            <div class="input-group">
+                                <i class="fas fa-calendar-check"></i>
+                                <input type="text" id="year" name="year">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Pincode</label>
+                            <div class="input-group">
+                                <i class="fas fa-map-pin"></i>
+                                <input type="text" id="pincode" name="pincode">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>City</label>
+                        <div class="input-group">
+                            <i class="fas fa-city"></i>
+                            <input type="text" id="city" name="city">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Full Address</label>
+                        <div class="input-group">
+                            <i class="fas fa-map-marked-alt" style="top: 25px;"></i>
+                            <textarea id="address" name="address" rows="2"
+                                style="width: 100%; border-radius: 8px; border: 1px solid #ddd; padding: 10px 10px 10px 40px;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons" style="margin-top: 15px;">
+                        <button type="button" class="btn btn-primary btn-secondary" onclick="backToStep1()"
+                            style="flex: 1;">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button type="submit" class="btn btn-primary" style="flex: 2;">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- RIGHT SIDE WELCOME PANEL -->
+        <div class="auth-welcome">
+            <div class="welcome-content">
+                <i class="fas fa-user-graduation"></i>
+                <h3>Library Membership</h3>
+                <p>Register once to get lifetime access to all our physical and digital resources.</p>
+                <div class="welcome-features">
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Instant Access</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Borrow Books</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>E-Material Downloads</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        let isEmailVerified = false;
+        let isMobileVerified = false;
+
+        function fetchUserDetails() {
+            const roll = document.getElementById('roll_number').value.trim();
+            const feedback = document.getElementById('rollNoFeedback');
+
+            if (!roll) { feedback.innerHTML = ''; return; }
+
+            feedback.innerHTML = "Checking...";
+
+            fetch("{% url 'fetch_user_details' %}?roll_no=" + roll)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        feedback.innerHTML = "<span style='color:green;'>User Found ✔</span>";
+
+                        ["email", "mobile", "first_name", "last_name", "branch"].forEach(id => {
+                            if (data.data[id]) {
+                                document.getElementById(id).value = data.data[id];
+                                document.getElementById(id).readOnly = true;
+                            }
+                        });
+
+                        document.getElementById("user_type").value = data.data.user_type;
+                        document.getElementById("user_type").disabled = true;
+
+                        // Also set year if it exists in data
+                        if (data.data.year_of_joining) {
+                            document.getElementById("year").value = data.data.year_of_joining;
+                            document.getElementById("year").readOnly = true;
+                        }
+
+                    } else {
+                        feedback.innerHTML = "<span style='color:red;'>" + data.message + "</span>";
+                    }
+                });
+        }
+
+        function sendEmailOTP() {
+            if (!email.value) { alert("Enter email first"); return; }
+            fetch("{% url 'send_email_otp' %}", {
+                method: "POST",
+                headers: { 'X-CSRFToken': csrftoken },
+                body: new URLSearchParams({ 'email': email.value })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.status);
+                });
+        }
+
+        function validateEmailOTP() {
+            fetch("{% url 'verify_email_otp' %}", {
+                method: "POST",
+                headers: { 'X-CSRFToken': csrftoken },
+                body: new URLSearchParams({ 'otp': email_otp.value })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        isEmailVerified = true;
+                        alert("Email Verified ✔");
+                    } else {
+                        alert(data.message);
+                    }
+                });
+        }
+
+
+        function goToStep2() {
+            if (!isEmailVerified) {
+                alert("Verify Email First");
+                return;
+            }
+            if (password.value !== confirm_password.value) {
+                alert("Passwords do not match");
+                return;
+            }
+            if (!password.value) {
+                alert("Password is required");
+                return;
+            }
+            document.getElementById("step1").style.display = "none";
+            document.getElementById("step2").style.display = "block";
+        }
+
+        function backToStep1() {
+            document.getElementById("step1").style.display = "block";
+            document.getElementById("step2").style.display = "none";
+        }
+
+        document.querySelector('.auth-form').addEventListener('submit', function (e) {
+            if (!isEmailVerified) {
+                e.preventDefault();
+                alert("Verify Email before submitting");
+            }
+            // Before submitting, enable disabled fields so they are sent in POST
+            document.getElementById("user_type").disabled = false;
+        });
+    </script>
+
+</body>
+
+</html>

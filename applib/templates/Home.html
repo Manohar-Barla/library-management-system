@@ -1,0 +1,253 @@
+{% load static %}   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIET Library Management System</title>
+    <link rel="stylesheet" href="{% static 'css/Home.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">    
+</head>
+<body>  
+    <!-- Header Section -->
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="college-info">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.jdSqfoHHlYVjNIr1PiJOfgHaC1?pid=Api&P=0&h=180" alt="KIET Logo" class="logo">
+                    <div class="college-text">
+                        <h1>Kakinada Institute of Engineering and Technology</h1>
+                        <p>Approved by AICTE, Affiliated to JNTUK, Accredited by NAAC</p>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    <a href="{% url 'login' %}" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="{% url 'register' %}" class="btn-register">
+                    <i class="fas fa-user-plus"></i> Register
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <div class="container">
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="dropdown">
+                        <a href="#"><i class="fas fa-book"></i> Books <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="#">New Arrivals</a>
+                            <a href="#">Best Sellers</a>
+                            <a href="#">Reference Books</a>
+                            <a href="#">Digital Library</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#"><i class="fas fa-graduation-cap"></i> Academics <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="#">Engineering</a>
+                            <a href="#">Management</a>
+                            <a href="#">Computer Science</a>
+                            <a href="#">Electronics</a>
+                        </div>
+                    </li>
+                    <li><a href="#"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="#"><i class="fas fa-phone-alt"></i> Contact</a></li>
+                </ul>
+                <div class="search-box">
+                    <input type="text" placeholder="Search books, authors, or topics...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Welcome to KIET Digital Library</h2>
+                <p>Access thousands of books, journals, and research papers at your fingertips</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary">Explore Collection</button>
+                    <button class="btn-secondary">Virtual Tour</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Library Services</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Book Borrowing</h3>
+                    <p>Borrow books for up to 14 days with option to renew online</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-laptop"></i>
+                    <h3>E-Library</h3>
+                    <p>Access thousands of e-books and journals from anywhere</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Study Rooms</h3>
+                    <p>Book group study rooms for collaborative learning</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h3>Research Help</h3>
+                    <p>Get assistance from our librarians for your research projects</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals Section -->
+    <section class="new-arrivals">
+        <div class="container">
+            <h2>New Arrivals</h2>
+            <div class="books-grid">
+                <div class="book-card">
+                    <img src="https://placeholder.pics/svg/200x300/3498DB/FFFFFF/Book-Cover" alt="Book Cover">
+                    <h3>Python Programming</h3>
+                    <p>Dr. John Smith</p>
+                    <button class="btn-small">View Details</button>
+                </div>
+                <div class="book-card">
+                    <img src="https://placeholder.pics/svg/200x300/E74C3C/FFFFFF/Book-Cover" alt="Book Cover">
+                    <h3>Data Structures</h3>
+                    <p>Prof. Alice Johnson</p>
+                    <button class="btn-small">View Details</button>
+                </div>
+                <div class="book-card">
+                    <img src="https://placeholder.pics/svg/200x300/27AE60/FFFFFF/Book-Cover" alt="Book Cover">
+                    <h3>Machine Learning</h3>
+                    <p>Dr. Robert Brown</p>
+                    <button class="btn-small">View Details</button>
+                </div>
+                <div class="book-card">
+                    <img src="https://placeholder.pics/svg/200x300/F39C12/FFFFFF/Book-Cover" alt="Book Cover">
+                    <h3>Web Development</h3>
+                    <p>Sarah Williams</p>
+                    <button class="btn-small">View Details</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="statistics">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>25,000+</h3>
+                    <p>Physical Books</p>
+                </div>
+                <div class="stat-item">
+                    <h3>15,000+</h3>
+                    <p>E-Books</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100+</h3>
+                    <p>Journal Subscriptions</p>
+                </div>
+                <div class="stat-item">
+                    <h3>5,000+</h3>
+                    <p>Active Members</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Korangi, Kakinada, Andhra Pradesh 533461</p>
+                    <p><i class="fas fa-phone"></i> +91 884 235 6789</p>
+                    <p><i class="fas fa-envelope"></i> library@kiet.edu</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Library Hours</a></li>
+                        <li><a href="#">Borrowing Policies</a></li>
+                        <li><a href="#">Online Resources</a></li>
+                        <li><a href="#">Research Guides</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Kakinada Institute of Engineering and Technology. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login to Your Account</h2>
+            <form>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn-primary">Login</button>
+                <p>Don't have an account? <a href="#" id="switchToRegister">Register now</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create New Account</h2>
+            <form>
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="new-password">Password</label>
+                    <input type="password" id="new-password" placeholder="Create a password">
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="Confirm your password">
+                </div>
+                <button type="submit" class="btn-primary">Register</button>
+                <p>Already have an account? <a href="#" id="switchToLogin">Login here</a></p>
+            </form>
+        </div>
+    </div>
+    <script src="{% static 'libapp/js/Home.js' %}"></script>
+</body>
+</html> 

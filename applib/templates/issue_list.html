@@ -1,0 +1,132 @@
+{% block extra_css %}
+<style>
+    .alert {
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+    }
+
+    .alert-error {
+        background: #ffebee;
+        color: #d32f2f;
+        border-color: #ffcdd2;
+    }
+
+    .alert-success {
+        background: #e8f5e9;
+        color: #2e7d32;
+        border-color: #c8e6c9;
+    }
+
+    .badge {
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .badge-overdue {
+        background: #ffebee;
+        color: #d32f2f;
+    }
+
+    .badge-today {
+        background: #fff3e0;
+        color: #ef6c00;
+    }
+
+    .badge-future {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+    <h2 class="card-title" style="margin-bottom: 0; border: none;">Active Issues & History</h2>
+    <a href="{% url 'issue_add' %}" class="btn"
+        style="background: var(--accent); color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: 600;"><i
+            class="fas fa-hand-holding-medical"></i> Issue a Book</a>
+</div>
+
+{% if messages %}
+<div style="margin-bottom: 20px;">
+    {% for message in messages %}
+    <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="card" style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+            <tr style="background: #f8f9fa; border-bottom: 2px solid #eee;">
+                <th style="padding: 15px; color: #555;">ID</th>
+                <th style="padding: 15px; color: #555;">Student (Roll No)</th>
+                <th style="padding: 15px; color: #555;">Book Title</th>
+                <th style="padding: 15px; color: #555;">Issue Date</th>
+                <th style="padding: 15px; color: #555;">Due Date</th>
+                <th style="padding: 15px; color: #555;">Return Date</th>
+                <th style="padding: 15px; color: #555;">Reminder</th>
+                <th style="padding: 15px; color: #555;">Status</th>
+                <th style="padding: 15px; color: #555;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for issue in issues %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 15px;">{{ issue.id }}</td>
+                <td style="padding: 15px; font-weight: 600;">{{ issue.student.username }}</td>
+                <td style="padding: 15px;">{{ issue.book.title }}</td>
+                <td style="padding: 15px;">{{ issue.issue_date }}</td>
+                <td style="padding: 15px; color: #d32f2f; font-weight: 600;">{{ issue.due_date|default:"-" }}</td>
+                <td style="padding: 15px;">{{ issue.return_date|default:"-" }}</td>
+                <td style="padding: 15px;">
+                    {% if not issue.returned and issue.due_date %}
+                    {% if issue.days_remaining < 0 %} <span class="badge badge-overdue">Overdue ({{
+                        issue.days_remaining|abs }} days)</span>
+                        {% elif issue.days_remaining == 0 %}
+                        <span class="badge badge-today">Due Today</span>
+                        {% else %}
+                        <span class="badge badge-future">{{ issue.days_remaining }} days left</span>
+                        {% endif %}
+                        {% else %}
+                        <span style="color: #999;">-</span>
+                        {% endif %}
+                </td>
+                <td style="padding: 15px;">
+                    {% if issue.returned %}
+                    <span
+                        style="background: #e8f5e9; color: #2e7d32; padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Returned</span>
+                    {% else %}
+                    <span
+                        style="background: #fff3e0; color: #ef6c00; padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Issued</span>
+                    {% endif %}
+                </td>
+                <td style="padding: 15px;">
+                    {% if not issue.returned %}
+                    <form method="POST" action="{% url 'issue_return' issue.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirm('Mark this book as returned?');"
+                            style="background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                            Mark Returned
+                        </button>
+                    </form>
+                    {% else %}
+                    <span style="color: #999;">-</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" style="padding: 20px; text-align: center; color: #777;">No issue history found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login - KIET Library Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/Home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header>
+        <div class="header-top">
+            <div class="container">
+
+                <div class="college-info">
+                    <div class="logo-img">
+                        <img src="https://tse3.mm.bing.net/th/id/OIP.jdSqfoHHlYVjNIr1PiJOfgHaC1?pid=Api&P=0&h=180"
+                            alt="KIET Logo" class="logo">
+                    </div>
+
+                    <div class="college-text">
+                        <h1>Kakinada Institute of Engineering and Technology</h1>
+                        <p>Approved by AICTE, Affiliated to JNTUK, Accredited by NAAC</p>
+                    </div>
+                </div>
+
+                <div class="user-actions">
+                    <a href="{% url 'login' %}" class="btn-login active">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="{% url 'register' %}" class="btn-register">
+                        <i class="fas fa-user-plus"></i> Register
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ================= LOGIN SECTION ================= -->
+    <div class="auth-container">
+
+        <!-- LOGIN CARD -->
+        <div class="auth-card">
+
+            <div class="auth-header">
+                <h2>Library Login</h2>
+                <p>Welcome to KIET Library System</p>
+            </div>
+
+            <form class="auth-form" method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+
+                {% if messages %}
+                <div class="alert alert-error">
+                    {% for message in messages %}
+                    <p><i class="fas fa-exclamation-circle"></i> {{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- ID -->
+                <div class="form-group">
+                    <label for="username">ID</label>
+                    <div class="input-group">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" id="username" name="username" placeholder="Enter your Roll No / Username"
+                            required>
+                    </div>
+                </div>
+
+                <!-- CATEGORY -->
+                <div class="form-group">
+                    <label for="role">Category</label>
+                    <div class="input-group">
+                        <i class="fas fa-user-tag"></i>
+                        <select name="role" id="role" required>
+                            <option value="">Select Category</option>
+                            <option value="student">Student</option>
+                            <option value="admin">Admin</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="staff">Staff</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+                        <span class="toggle-password" onclick="togglePassword()">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- OPTIONS -->
+                <div class="form-options">
+                    <label class="checkbox">
+                        <input type="checkbox" name="remember">
+                        <span>Remember me</span>
+                    </label>
+
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                </div>
+
+                <!-- LOGIN BUTTON -->
+                <button type="submit" class="btn btn-primary btn-full">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+
+                <!-- FOOTER -->
+                <div class="auth-footer">
+                    <p>Don't have an account?
+                        <a href="{% url 'register' %}">Create one here</a>
+                    </p>
+                </div>
+
+            </form>
+        </div>
+
+
+        <!-- RIGHT SIDE WELCOME PANEL -->
+        <div class="auth-welcome">
+            <div class="welcome-content">
+
+                <i class="fas fa-book-reader"></i>
+
+                <h3>KIET Digital Library</h3>
+
+                <p>
+                    Access thousands of books, research papers,
+                    and digital resources for your academic success.
+                </p>
+
+                <div class="welcome-features">
+
+                    <div class="feature">
+                        <i class="fas fa-book"></i>
+                        <span>25,000+ Books</span>
+                    </div>
+
+                    <div class="feature">
+                        <i class="fas fa-laptop"></i>
+                        <span>E-Library Access</span>
+                    </div>
+
+                    <div class="feature">
+                        <i class="fas fa-users"></i>
+                        <span>Study Rooms</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- ================= JS ================= -->
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById("password");
+            const icon = document.querySelector(".toggle-password i");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

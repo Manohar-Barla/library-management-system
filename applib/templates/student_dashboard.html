@@ -1,0 +1,85 @@
+{% extends 'base_student.html' %}
+
+{% block content %}
+<h3>
+    Welcome, {{ user.first_name|default:user.username }}
+</h3>
+<div class="dashboard-grid">
+    <!-- Stat Card 1 -->
+    <div class="stat-card">
+        <div class="stat-icon" style="color: #2196f3; background: rgba(33,150,243,0.1);">
+            <i class="fas fa-book-open"></i>
+        </div>
+        <div class="stat-details">
+            <h3>Currently Issued</h3>
+            <p>{{ issued_count }}</p>
+        </div>
+    </div>
+
+    <!-- Stat Card 2 -->
+    <div class="stat-card">
+        <div class="stat-icon" style="color: #ff9800; background: rgba(255,152,0,0.1);">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="stat-details">
+            <h3>Overdue Books</h3>
+            <p>0</p> <!-- To be implemented later if logic supports Overdue calculations -->
+        </div>
+    </div>
+
+    <!-- Stat Card 3 -->
+    <div class="stat-card">
+        <div class="stat-icon" style="color: #e91e63; background: rgba(233,30,99,0.1);">
+            <i class="fas fa-rupee-sign"></i>
+        </div>
+        <div class="stat-details">
+            <h3>Pending Fines</h3>
+            <p>₹0.00</p>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-title"><i class="fas fa-clock"></i> Recent Issues & Activity</h2>
+    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+            <tr style="background: #f8f9fa; border-bottom: 2px solid #eee;">
+                <th style="padding: 12px; color: #555;">Book Title</th>
+                <th style="padding: 12px; color: #555;">Issue Date</th>
+                <th style="padding: 12px; color: #555;">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for issue in recent_issues %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 12px; font-weight: 500;">{{ issue.book.title }}</td>
+                <td style="padding: 12px;">{{ issue.issue_date }}</td>
+                <td style="padding: 12px;">
+                    {% if issue.returned %}
+                    <span
+                        style="background: #e8f5e9; color: #2e7d32; padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Returned</span>
+                    {% else %}
+                    <span
+                        style="background: #fff3e0; color: #ef6c00; padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Issued</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" style="padding: 15px; text-align: center; color: #777;">No recent activity found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="card"
+    style="margin-top: 30px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;">
+    <h2 style="margin-bottom: 10px;"><i class="fas fa-search"></i> Need a new book?</h2>
+    <p style="margin-bottom: 15px; opacity: 0.9;">Browse our extensive library collection to find the resources you need
+        for your courses.</p>
+    <a href="#" class="btn"
+        style="display: inline-block; background: white; color: var(--primary); padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">Browse
+        Library Collection</a>
+</div>
+{% endblock %}

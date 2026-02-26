@@ -1,0 +1,94 @@
+{% extends 'base_admin.html' %}
+
+{% block page_title %}Books{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+    <h2 class="card-title" style="margin-bottom: 0;">Manage Books</h2>
+
+    <a href="{% url 'book_add' %}" class="btn"
+        style="background: var(--accent); color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: 600;">
+        <i class="fas fa-plus"></i> Add Book
+    </a>
+</div>
+
+<!-- Messages -->
+{% if messages %}
+<div style="margin-bottom: 20px;">
+    {% for message in messages %}
+    <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Books Table -->
+<div class="card" style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+
+        <thead>
+            <tr style="background: #f8f9fa; border-bottom: 2px solid #eee;">
+                <th style="padding: 15px;">ISBN</th>
+                <th style="padding: 15px;">Title</th>
+                <th style="padding: 15px;">Author</th>
+                <th style="padding: 15px;">Category</th>
+                <th style="padding: 15px;">Stock (Available / Total)</th>
+                <th style="padding: 15px;">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for book in books %}
+            <tr style="border-bottom: 1px solid #eee;">
+
+                <td style="padding: 15px;">{{ book.isbn }}</td>
+
+                <td style="padding: 15px; font-weight: 600;">
+                    {{ book.title }}
+                </td>
+
+                <td style="padding: 15px;">
+                    {{ book.author.name|default:"-" }}
+                </td>
+
+                <td style="padding: 15px;">
+                    {{ book.category.name|default:"-" }}
+                </td>
+
+                <td style="padding: 15px;">
+                    <span style="font-weight: bold;"
+                        class="{% if book.available_copies > 0 %}status-available{% else %}status-unavailable{% endif %}">
+                        {{ book.available_copies }}
+                    </span>
+                    / {{ book.total_copies }}
+                </td>
+
+                <td style="padding: 15px;">
+                    <a href="{% url 'book_edit' book.id %}" style="color: var(--primary); margin-right: 15px;">
+                        <i class="fas fa-edit"></i>
+                    </a>
+
+                    <a href="{% url 'book_delete' book.id %}" onclick="return confirm('Delete this book?');"
+                        style="color: #d32f2f;">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="6" style="padding: 20px; text-align: center; color: #777;">
+                    No books found in the library.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+{% endblock %}
