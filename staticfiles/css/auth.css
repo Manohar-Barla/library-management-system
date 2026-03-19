@@ -1,0 +1,102 @@
+/* Remove scrolling */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Make form centered */
+.auth-form {
+    max-width: 950px;
+    margin: 20px auto;
+    padding: 15px 25px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    height: 88vh;
+    overflow: hidden;
+}
+
+/* Reduce section title size */
+.form-section-title {
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+/* Compact form groups */
+.form-group {
+    margin-bottom: 8px;
+}
+
+.form-group label {
+    font-size: 13px;
+    margin-bottom: 3px;
+    display: block;
+}
+
+/* Make inputs smaller */
+.input-group input,
+.input-group select {
+    height: 32px;
+    font-size: 13px;
+    padding: 4px 8px;
+}
+
+/* Two column layout */
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* OTP row compact */
+.otp-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.otp-row input {
+    height: 30px;
+    width: 120px;
+}
+
+.btn-otp {
+    height: 30px;
+    font-size: 12px;
+    padding: 3px 8px;
+}
+
+.btn-primary {
+    height: 35px;
+    font-size: 14px;
+}
+
+/* Reduce header height */
+header {
+    padding: 5px 0;
+}
+
+.college-text h1 {
+    font-size: 18px;
+}
+
+.college-text p {
+    font-size: 11px;
+}
+
+/* Reduce logo size */
+.logo {
+    height: 40px;
+}
+
+/* Footer compact */
+.auth-footer {
+    margin-top: 8px;
+    font-size: 13px;
+}
+
